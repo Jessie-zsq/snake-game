@@ -91,8 +91,8 @@ def draw_grid(surface):
 
 
 def show_game_over(screen, score):
-    font = pygame.font.SysFont("menlo", 36)
-    small_font = pygame.font.SysFont("menlo", 18)
+    font = pygame.font.Font(None, 36)
+    small_font = pygame.font.Font(None, 18)
     texts = [
         (font, "GAME OVER", WHITE, (0, -40)),
         (small_font, f"Score: {score}", WHITE, (0, 10)),
@@ -106,9 +106,9 @@ def show_game_over(screen, score):
 
 def show_start_screen(screen):
     """速度选择界面，返回选中的 fps 和速度名称。"""
-    font = pygame.font.SysFont("menlo", 32)
-    small_font = pygame.font.SysFont("menlo", 18)
-    tiny_font = pygame.font.SysFont("menlo", 14)
+    font = pygame.font.Font(None, 32)
+    small_font = pygame.font.Font(None, 18)
+    tiny_font = pygame.font.Font(None, 14)
     speed_keys = list(SPEEDS.keys())
     selected = 1  # 默认选中速
 
@@ -227,7 +227,7 @@ def run_game(screen, clock, speed_name, fps):
         food.draw(screen)
 
         # 分数和速度显示
-        font = pygame.font.SysFont("menlo", 16)
+        font = pygame.font.Font(None, 16)
         score_text = font.render(f"Score: {score}", True, WHITE)
         speed_text = font.render(f"Speed: {speed_name}", True, YELLOW)
         screen.blit(score_text, (10, 10))
