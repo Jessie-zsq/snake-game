@@ -1,0 +1,40 @@
+name: Build Game
+
+on:
+  push:
+    branches: [main, master]
+  workflow_dispatch:
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install pygame pyinstaller
+      - run: pyinstaller --onedir --windowed --name "Snake" test.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Snake-Windows
+          path: dist/Snake/
+
+  build-macos:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install pygame pyinstaller
+      - run: pyinstaller --onedir --windowed --name "Snake" test.py
+      - run: |
+          mkdir release
+          cp -R dist/Snake.app release/
+          ln -sf /Applications release/Applications
+          hdiutil create -volname "Snake" -srcfolder release -ov -format UDZO Snake.dmg
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Snake-macOS
+          path: Snake.dmg
