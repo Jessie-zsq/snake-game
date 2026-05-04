@@ -15,10 +15,16 @@ jobs:
           python-version: "3.11"
       - run: pip install pygame pyinstaller
       - run: pyinstaller --onedir --windowed --name "Snake" test.py
+      - name: Install Inno Setup
+        run: choco install innosetup -y
+      - name: Build installer
+        run: >
+          & "C:\Program Files (x86)\Inno Setup 6\ISCC.exe"
+          snake_installer.iss
       - uses: actions/upload-artifact@v4
         with:
-          name: Snake-Windows
-          path: dist/Snake/
+          name: Snake-Windows-Installer
+          path: installer_output/Snake-Installer.exe
 
   build-macos:
     runs-on: macos-latest
